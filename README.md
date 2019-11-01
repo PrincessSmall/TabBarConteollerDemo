@@ -78,7 +78,7 @@ UIViewController *rootViewController = appdelegate.window.rootViewController;
                                  NSForegroundColorAttributeName:normalTitleColor,
                                  NSFontAttributeName:[UIFont fontWithName:fontName size:size],
                                  };
-    [[UITabBarItem appearance]setTitleTextAttributes:attribuDic forState:UIControlStateNormal];//TODO appearance方法的使用不懂
+    [[UITabBarItem appearance]setTitleTextAttributes:attribuDic forState:UIControlStateNormal];
     
     NSDictionary *attributSelDic = @{
                                      NSForegroundColorAttributeName:selectedTitleColor,
