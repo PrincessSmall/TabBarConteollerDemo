@@ -11,6 +11,7 @@
 #import "BaseNavigationController.h"
 #import "BViewController.h"
 #import "AViewController.h"
+#import "CViewController.h"
 
 @interface BaseTabbarViewController ()
 
@@ -33,10 +34,14 @@
     BViewController *bvc = [[BViewController alloc]init];
     [self setupTabbarItem:bvc.tabBarItem title:@"订单" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_order_normal" selectedImage:@"tabbar_order_select"];
     
+    CViewController *cvc = [[CViewController alloc]init];
+    [self setupTabbarItem:cvc.tabBarItem title:@"我的" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_order_normal" selectedImage:@"tabbar_order_select"];
+    
     BaseNavigationController *navA = [[BaseNavigationController alloc]initWithRootViewController:avc];
     BaseNavigationController *navB = [[BaseNavigationController alloc]initWithRootViewController:bvc];
+    BaseNavigationController *navC = [[BaseNavigationController alloc]initWithRootViewController:cvc];
     
-    self.viewControllers = @[navA,navB];
+    self.viewControllers = @[navA,navB,navC];
 }
 
 - (void)setupTabbarItem:(UITabBarItem *)tabbarItem title:(NSString *)title titleSize:(CGFloat)size titleFontName:(NSString *)fontName normalTitleColor:(UIColor *)normalTitleColor selectedTitleColor:(UIColor *)selectedTitleColor normalImage:(NSString *)normalImage selectedImage:(NSString *)selectedImage {

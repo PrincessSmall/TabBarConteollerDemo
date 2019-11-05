@@ -34,21 +34,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    NSLog(@"A页面 viewDidAppear topViewController = %@ ,  visibleViewController = %@",self.navigationController.topViewController,self.navigationController.visibleViewController);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];//修改导航栏的背景颜色
+
 }
 
-//- (void)viewDidDisappear:(BOOL)animated {//使用这个方法导航栏会有闪一下颜色消失的效果
-//    [super viewDidDisappear:animated];
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-//}
-
 - (void)selectNextButtonAction {
-//    self.hidesBottomBarWhenPushed = YES;//写在这里，返回的时候tabbar也不见了
     CViewController *vc = [[CViewController alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
 }

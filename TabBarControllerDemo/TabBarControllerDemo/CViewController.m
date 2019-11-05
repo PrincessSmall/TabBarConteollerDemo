@@ -59,6 +59,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    NSLog(@"C页面 viewWillAppear topViewController = %@ ,  visibleViewController = %@",self.navigationController.topViewController,self.navigationController.visibleViewController);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"C页面 viewDidAppear topViewController = %@ ,  visibleViewController = %@",self.navigationController.topViewController,self.navigationController.visibleViewController);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
