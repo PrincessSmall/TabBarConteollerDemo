@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    //feature
 //    self.title = @"A页面";
     [self.view addSubview:self.nextButton];
     self.view.backgroundColor = [UIColor whiteColor];
