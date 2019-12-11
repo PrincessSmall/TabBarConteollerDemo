@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"第二页";
+//    self.title = @"第二页";//使用title之后，点击会tabbar的标题也会变成第二页
+    self.navigationItem.title = @"第二页";
     [self.view addSubview:self.bButton];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.

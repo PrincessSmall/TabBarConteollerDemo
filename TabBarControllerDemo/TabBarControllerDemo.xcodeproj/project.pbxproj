@@ -20,6 +20,7 @@
 		180F82BD2366C35000C61D8F /* BaseTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F82BC2366C35000C61D8F /* BaseTabbarViewController.m */; };
 		180F82C02366C41F00C61D8F /* BViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F82BF2366C41F00C61D8F /* BViewController.m */; };
 		180F82C32366D1ED00C61D8F /* CViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F82C22366D1ED00C61D8F /* CViewController.m */; };
+		181B859C23A0DCC80044CDFB /* UITabBarItem+SubViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 181B859B23A0DCC80044CDFB /* UITabBarItem+SubViews.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,8 @@
 		180F82BF2366C41F00C61D8F /* BViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BViewController.m; sourceTree = "<group>"; };
 		180F82C12366D1ED00C61D8F /* CViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CViewController.h; sourceTree = "<group>"; };
 		180F82C22366D1ED00C61D8F /* CViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CViewController.m; sourceTree = "<group>"; };
+		181B859A23A0DCC80044CDFB /* UITabBarItem+SubViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+SubViews.h"; sourceTree = "<group>"; };
+		181B859B23A0DCC80044CDFB /* UITabBarItem+SubViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+SubViews.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,8 @@
 				1804A3F623681C9C00740AC5 /* DViewController.m */,
 				180F82BB2366C35000C61D8F /* BaseTabbarViewController.h */,
 				180F82BC2366C35000C61D8F /* BaseTabbarViewController.m */,
+				181B859A23A0DCC80044CDFB /* UITabBarItem+SubViews.h */,
+				181B859B23A0DCC80044CDFB /* UITabBarItem+SubViews.m */,
 				180F828F2366C23F00C61D8F /* Main.storyboard */,
 				180F82922366C24200C61D8F /* Assets.xcassets */,
 				180F82942366C24200C61D8F /* LaunchScreen.storyboard */,
@@ -294,6 +299,7 @@
 				180F828B2366C23F00C61D8F /* AppDelegate.m in Sources */,
 				180F82C02366C41F00C61D8F /* BViewController.m in Sources */,
 				180F82BD2366C35000C61D8F /* BaseTabbarViewController.m in Sources */,
+				181B859C23A0DCC80044CDFB /* UITabBarItem+SubViews.m in Sources */,
 				1804A3F723681C9C00740AC5 /* DViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

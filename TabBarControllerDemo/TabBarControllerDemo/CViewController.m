@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"C页面";
+//    self.title = @"C页面";
+    self.navigationItem.title = @"C页面";
     self.view.backgroundColor = [UIColor whiteColor];
     
     NSArray *viewControllers = self.navigationController.viewControllers;
