@@ -1,3 +1,4 @@
 build/
 *.xcuserstates
 *.xcscheme
+*.xcuserstate

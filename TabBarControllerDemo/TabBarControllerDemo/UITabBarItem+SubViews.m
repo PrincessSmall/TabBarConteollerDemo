@@ -27,8 +27,7 @@
     return nil;
 }
 
-- (UILabel *)tabBarButtonLabel
-{
+- (UILabel *)tabBarButtonLabel {
     for (UILabel *subview in self.tabBarButton.subviews) {
         if ([subview cyl_isTabLabel]) {
             return (UILabel *)subview;
@@ -49,8 +48,7 @@
     return isKindOfButton;
 }
 
-- (BOOL)cyl_isTabImageView
-{
+- (BOOL)cyl_isTabImageView {
     BOOL isKindOfImageView = [self cyl_isKindOfClass:[UIImageView class]];
     if (!isKindOfImageView) {
         return NO;
@@ -61,8 +59,7 @@
     return isTabImageView;
 }
 
-- (BOOL)cyl_isTabLabel
-{
+- (BOOL)cyl_isTabLabel {
     BOOL isKindOfLabel = [self cyl_isKindOfClass:[UILabel class]];
     return isKindOfLabel;
 }

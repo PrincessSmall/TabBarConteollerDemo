@@ -21,6 +21,7 @@
 @interface BaseTabbarViewController ()
 
 @property (nonatomic, strong) UIButton *firstCoverButton;//第一个的选中button
+@property (nonatomic,assign) NSInteger  indexFlag;//记录上一次点击tabbar，使用时，记得先在init或viewDidLoad里 初始化 = 0
 
 @end
 
@@ -28,9 +29,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tabBar.barTintColor = [UIColor whiteColor];//设置tabbar背景颜色
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -0.5, SCREEN_WIDTH, 1)];
+//    view.backgroundColor = [UIColor colorWithRed:242 green:242 blue:243 alpha:1];
+//    [[UITabBar appearance] insertSubview:view atIndex:0];
     
     [self setupChildVC];
-    [self setUpFirstCoverButtonShow:YES];
+    self.indexFlag = 0;
+    [self upAnimationWithIndex:self.indexFlag];
+//    [self setUpFirstCoverButtonShow:YES];
     ;
     
     // Do any additional setup after loading the view.
@@ -39,13 +46,13 @@
 - (void)setupChildVC {
     
     AViewController *avc = [[AViewController alloc]init];
-    [self setupTabbarItem:avc.tabBarItem title:@"首页" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_about_normal" selectedImage:@"tabbar_about_select"];
+    [self setupTabbarItem:avc.tabBarItem title:@"首页" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_about_normal" selectedImage:@"tabar_select2"];
     
     BViewController *bvc = [[BViewController alloc]init];
-    [self setupTabbarItem:bvc.tabBarItem title:@"订单" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_order_normal" selectedImage:@"tabbar_order_select"];
+    [self setupTabbarItem:bvc.tabBarItem title:@"订单" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_order_normal" selectedImage:@"tabar_select2"];
     
     CViewController *cvc = [[CViewController alloc]init];
-    [self setupTabbarItem:cvc.tabBarItem title:@"我的" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_user_normal" selectedImage:@"tabbar_user_select"];
+    [self setupTabbarItem:cvc.tabBarItem title:@"我的" titleSize:12 titleFontName:@"HeiTi SC" normalTitleColor:[UIColor grayColor] selectedTitleColor:[UIColor purpleColor] normalImage:@"tabbar_user_normal" selectedImage:@"tabar_select2"];
     
     BaseNavigationController *navA = [[BaseNavigationController alloc]initWithRootViewController:avc];
     BaseNavigationController *navB = [[BaseNavigationController alloc]initWithRootViewController:bvc];
@@ -75,15 +82,116 @@
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    
     NSInteger index = [tabBar.items indexOfObject:item];
-    [self animationWithIndex:index];
-    if (index == 0) {
-        [self setUpFirstCoverButtonShow:YES];
-    }else {
-        [self setUpFirstCoverButtonShow:NO];
+    
+//    [self animationWithIndex:index];//调用缩放动画
+    if (self.indexFlag != index) {
+
+        [self downAnimationWithIndex:self.indexFlag];
+        [self upAnimationWithIndex:index];
+        self.indexFlag = index;
     }
+    
+//    if (index == 0) {
+//        [self setUpFirstCoverButtonShow:YES];
+//    }else {
+//        [self setUpFirstCoverButtonShow:NO];
+//    }
 }
 
+/// y轴移动动画，向上移动
+/// @param index 选中的index
+- (void)upAnimationWithIndex:(NSInteger)index {
+    NSMutableArray *tabBarButtonImageArray = [NSMutableArray array];
+    
+    for (UIControl *tabBarButton in self.tabBar.subviews) {
+        if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
+            for (UIView *imageView in tabBarButton.subviews) {
+                if ([imageView isKindOfClass:NSClassFromString(@"UITabBarSwappableImageView")]) {
+                    //添加动画
+                    [tabBarButtonImageArray addObject:imageView];
+                    //---将下面的动画代码块拷贝到此并修改最后一行addAnimation的layer对象即可---
+                }
+            }
+        }
+    }
+    
+    //向上移动
+//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+//    //速度控制函数，控制动画运行的节奏
+//    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//
+//    animation.duration = 0.2;       //执行时间
+//    animation.repeatCount = 1;      //执行次数
+//    animation.removedOnCompletion = NO;
+////    animation.autoreverses = YES;
+//    animation.fillMode = kCAFillModeForwards;// 设置动画完成时，返回到原点
+//    animation.fromValue = [NSNumber numberWithFloat:0];   //初始伸缩倍数
+//    animation.toValue = [NSNumber numberWithFloat:-10];     //结束伸缩倍数
+//    [[tabBarButtonImageArray[index] layer] addAnimation:animation forKey:nil];
+
+    UIView *imageView = tabBarButtonImageArray[index];
+    CASpringAnimation *animaton = [CASpringAnimation animationWithKeyPath:@"position.y"];
+    animaton.initialVelocity = 6.f;
+    animaton.mass = 5;//质量，影响图层运动时的弹簧惯性，质量越大，弹簧拉伸和压缩的幅度越大 Defaults to one
+    animaton.stiffness = 200;//刚度系数(劲度系数/弹性系数)，刚度系数越大，形变产生的力就越大，运动越快 Defaults to 100
+    animaton.damping = 10;//阻尼系数，阻止弹簧伸缩的系数，阻尼系数越大，停止越快 Defaults to 10
+    animaton.duration = animaton.settlingDuration;
+    animaton.fillMode = kCAFillModeForwards;//当动画结束后，layer会一直保持着动画最后的状态
+//    animaton.autoreverses = NO;//默认是NO
+    animaton.removedOnCompletion = NO;//默认为YES 。当设置为YES时，动画结束后，移除layer层的；当设置为NO时，保持动画结束时layer的状态；
+    animaton.fromValue = @(imageView.layer.position.y);
+    animaton.toValue = @(imageView.layer.position.y-6);
+    animaton.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    [[tabBarButtonImageArray[index] layer] addAnimation:animaton forKey:nil];
+}
+
+
+/// y轴移动动画，向下移动动画
+/// @param index 上次选中item的index
+- (void)downAnimationWithIndex:(NSInteger)index {
+    NSMutableArray *tabBarButtonImageArray = [NSMutableArray array];
+    
+    for (UIControl *tabBarButton in self.tabBar.subviews) {
+        if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
+            for (UIView *imageView in tabBarButton.subviews) {
+                if ([imageView isKindOfClass:NSClassFromString(@"UITabBarSwappableImageView")]) {
+                    //添加动画
+                    [tabBarButtonImageArray addObject:imageView];
+                    //---将下面的动画代码块拷贝到此并修改最后一行addAnimation的layer对象即可---
+                }
+            }
+        }
+    }
+    
+    //向下移动
+    UIView *imageView = tabBarButtonImageArray[index];
+//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+//    //速度控制函数，控制动画运行的节奏
+//    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    animation.duration = 0.2;       //执行时间
+//    animation.repeatCount = 1;      //执行次数
+//    animation.removedOnCompletion = NO;
+//    animation.fillMode = kCAFillModeForwards;// 设置动画完成时，返回到原点
+//    animation.fromValue = @(imageView.layer.position.y-10);   //初始伸缩倍数
+//    animation.toValue = @(imageView.layer.position.y);     //结束伸缩倍数
+//    [[tabBarButtonImageArray[index] layer] addAnimation:animation forKey:nil];
+    
+    CASpringAnimation *animaton = [CASpringAnimation animationWithKeyPath:@"position.y"];
+    animaton.initialVelocity = .4f;
+    animaton.duration = animaton.settlingDuration;
+    animaton.fillMode = kCAFillModeForwards;//
+    animaton.autoreverses = NO;//默认是NO
+    animaton.removedOnCompletion = NO;//默认为YES 。当设置为YES时，动画结束后，移除layer层的；当设置为NO时，保持动画结束时layer的状态；
+    animaton.fromValue = @(imageView.layer.position.y-6);
+    animaton.toValue = @(imageView.layer.position.y);
+    animaton.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    [[tabBarButtonImageArray[index] layer] addAnimation:animaton forKey:nil];
+}
+
+/// 缩放动画，实现点击闪烁效果
+/// @param index 点击的item的index
 - (void)animationWithIndex:(NSInteger) index {
     NSMutableArray *tabbarbuttonArray = [NSMutableArray array];
     for (UIView *tabBarButton in self.tabBar.subviews) {
@@ -92,7 +200,7 @@
         }
     }
     CABasicAnimation *pulse = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    pulse.timingFunction= [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];//设定动画的速度变化 ，kCAMediaTimingFunctionEaseInEaseOut先加速后减速
+    pulse.timingFunction= [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];//设定动画的速度变化 ，kCAMediaTimingFunctionEaseInEaseOut先加速后减速,效果为淡入淡出
     pulse.duration = 0.4;
     pulse.repeatCount = 1;
 //    pulse.autoreverses = YES;//动画结束时是否执行逆动画
